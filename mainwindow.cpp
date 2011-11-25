@@ -14,7 +14,15 @@ MainWindow::MainWindow(QWidget *parent) :
 
     QIcon icon(":/icons/favicon.png");
     trayIcon->setIcon(icon);
-    trayIcon->setContextMenu(new QMenu());
+
+    QMenu* trayMenu = new QMenu();
+
+    QAction* exitMenuAction = new QAction(QString::fromUtf8("Выход"), this);
+    connect(exitMenuAction, SIGNAL(triggered()), this, SLOT(close()));
+
+    trayMenu->addAction(exitMenuAction);
+
+    trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
 }
 
@@ -25,5 +33,22 @@ MainWindow::~MainWindow()
 
 void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 {
-    this->setVisible(!this->isVisible());
+    switch (reason) {
+        case QSystemTrayIcon::Trigger:
+        case QSystemTrayIcon::DoubleClick:
+            this->setVisible(!this->isVisible());
+            break;
+        case QSystemTrayIcon::Context:
+        case QSystemTrayIcon::MiddleClick:
+        case QSystemTrayIcon::Unknown:
+            break;
+    }
 }
+void MainWindow::closeEvent(QCloseEvent *event)
+ {
+
+     if (event->spontaneous()&&trayIcon->isVisible()) {
+         this->hide();
+         event->ignore();
+     }
+ }
