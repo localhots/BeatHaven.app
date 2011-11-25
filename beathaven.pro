@@ -4,11 +4,10 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui phonon
 
 TARGET = beathaven
 TEMPLATE = app
-
 
 SOURCES += main.cpp\
         mainwindow.cpp

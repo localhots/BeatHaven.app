@@ -20,6 +20,7 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
+    void loadButtonClicked();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
 
 private:
