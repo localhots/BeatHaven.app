@@ -4,6 +4,8 @@
 #include <phonon/MediaObject>
 #include <phonon/AudioOutput>
 
+#include "data/track.h"
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
@@ -27,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
+
+    prepareTracks();
 }
 
 MainWindow::~MainWindow()
@@ -59,18 +63,46 @@ void MainWindow::closeEvent(QCloseEvent *event)
  }
 
 ///////////////////////////////////////////////////////////////////////
-// Загрузка файла из интернета
+// Список файлов
+///////////////////////////////////////////////////////////////////////
+void MainWindow::prepareTracks()
+{
+    QList<Track*> *tracks = new QList<Track*>();
+    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/01_sad_robot.mp3"));
+    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/02_take_me_to_the_bonuslevel_because_i_need_an_extralife.mp3"));
+
+    QListIterator<Track*> tracksIterator(*tracks);
+
+    playlist = new Phonon::MediaObject(this);
+    Phonon::AudioOutput* audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
+    Phonon::createPath(playlist, audioOutput);
+
+    while(tracksIterator.hasNext()) {
+        Track* t = tracksIterator.next();
+
+        QListWidgetItem* item = new QListWidgetItem(t->getTitle());
+
+        ui->trackListWidget->insertItem(
+                    ui->trackListWidget->count(), item);
+
+        playlist->enqueue(t->getFileURL());
+    }
+}
+
+///////////////////////////////////////////////////////////////////////
+// Кнопки плеера
 ///////////////////////////////////////////////////////////////////////
 
-QString FILE_URL("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/01_sad_robot.mp3");
-void MainWindow::loadButtonClicked()
-{
-    ui->fileDetailsLabel->setText(QString::fromUtf8("Кликнуто!"));
+void MainWindow::switchToPrevious(){
+}
 
-    Phonon::MediaObject* mediaObject = new Phonon::MediaObject(this);
-    Phonon::AudioOutput* audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
-    Phonon::createPath(mediaObject, audioOutput);
+void MainWindow::togglePlayPause(){
+    if(playlist->state()==Phonon::PlayingState) {
+        playlist->pause();
+    } else {
+        playlist->play();
+    }
+}
 
-    mediaObject->setCurrentSource(FILE_URL);
-    mediaObject->play();
+void MainWindow::switchToNext(){
 }

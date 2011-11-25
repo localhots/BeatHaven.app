@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include <QtGui>
 
+#include <phonon/MediaObject>
+
 namespace Ui {
     class MainWindow;
 }
@@ -20,16 +22,23 @@ protected:
     void closeEvent(QCloseEvent *event);
 
 private slots:
-    void loadButtonClicked();
     void iconActivated(QSystemTrayIcon::ActivationReason reason);
+
+    void switchToPrevious();
+    void togglePlayPause();
+    void switchToNext();
 
 private:
     Ui::MainWindow *ui;
+
+    void prepareTracks();
 
     QAction *restoreAction;
     QAction *quitAction;
 
     QSystemTrayIcon *trayIcon;
+
+    Phonon::MediaObject* playlist;
 };
 
 #endif // MAINWINDOW_H

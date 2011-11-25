@@ -10,9 +10,11 @@ TARGET = beathaven
 TEMPLATE = app
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    data/track.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    data/track.h
 
 FORMS    += mainwindow.ui
 

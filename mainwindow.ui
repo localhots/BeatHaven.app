@@ -42,18 +42,28 @@
      </widget>
     </item>
     <item>
+     <widget class="QListWidget" name="trackListWidget"/>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="getFileButton">
+       <widget class="QPushButton" name="previousButton">
         <property name="text">
-         <string>&amp;Get File</string>
+         <string>Previous</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="fileDetailsLabel">
+       <widget class="QPushButton" name="playPauseButton">
         <property name="text">
-         <string>No File</string>
+         <string>Play/Pause</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="nextButton">
+        <property name="text">
+         <string>Next</string>
         </property>
        </widget>
       </item>
@@ -68,23 +78,23 @@
  </resources>
  <connections>
   <connection>
-   <sender>getFileButton</sender>
+   <sender>playPauseButton</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>loadButtonClicked()</slot>
+   <slot>togglePlayPause()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>103</x>
-     <y>222</y>
+     <x>206</x>
+     <y>274</y>
     </hint>
     <hint type="destinationlabel">
      <x>397</x>
-     <y>55</y>
+     <y>40</y>
     </hint>
    </hints>
   </connection>
  </connections>
  <slots>
-  <slot>loadButtonClicked()</slot>
+  <slot>togglePlayPause()</slot>
  </slots>
 </ui>
