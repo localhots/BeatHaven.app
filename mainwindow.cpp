@@ -4,6 +4,8 @@
 #include <phonon/MediaObject>
 #include <phonon/AudioOutput>
 
+#include <QDebug>
+
 #include "data/track.h"
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -25,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) :
     generateIcons();
 
     QAction* exitMenuAction = new QAction(exitIcon, QString::fromUtf8("В&ыход"), this);
+    exitMenuAction->setIconVisibleInMenu(true);
     connect(exitMenuAction, SIGNAL(triggered()), this, SLOT(close()));
 
     trayMenu->addAction(exitMenuAction);
