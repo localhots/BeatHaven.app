@@ -32,6 +32,7 @@ private:
     Ui::MainWindow *ui;
 
     void prepareTracks();
+    void generateIcons();
 
     QAction *restoreAction;
     QAction *quitAction;
@@ -39,6 +40,12 @@ private:
     QSystemTrayIcon *trayIcon;
 
     Phonon::MediaObject* playlist;
+
+    QIcon playIcon;
+    QIcon pauseIcon;
+    QIcon previousIcon;
+    QIcon nextIcon;
+    QIcon exitIcon;
 };
 
 #endif // MAINWINDOW_H

@@ -17,12 +17,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
             this, SLOT(iconActivated(QSystemTrayIcon::ActivationReason)));
 
-    QIcon icon(":/icons/favicon.png");
+    QIcon icon(":/icons/images/favicon.png");
     trayIcon->setIcon(icon);
 
     QMenu* trayMenu = new QMenu();
 
-    QAction* exitMenuAction = new QAction(QString::fromUtf8("Выход"), this);
+    generateIcons();
+
+    QAction* exitMenuAction = new QAction(exitIcon, QString::fromUtf8("В&ыход"), this);
     connect(exitMenuAction, SIGNAL(triggered()), this, SLOT(close()));
 
     trayMenu->addAction(exitMenuAction);
@@ -56,20 +58,33 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 void MainWindow::closeEvent(QCloseEvent *event)
  {
-//     if (event->spontaneous()&&trayIcon->isVisible()) {
-//         this->hide();
-//         event->ignore();
-//     }
+     if (event->spontaneous()&&trayIcon->isVisible()) {
+         this->hide();
+         event->ignore();
+     }
  }
 
 ///////////////////////////////////////////////////////////////////////
-// Список файлов
+// Подготовка дорожек и иконок
 ///////////////////////////////////////////////////////////////////////
+void MainWindow::generateIcons()
+{
+    playIcon = QIcon::fromTheme("media-playback-start", QIcon(":/icons/images/button_grey_play.png"));
+    pauseIcon = QIcon::fromTheme("media-playback-pause", QIcon(":/icons/images/button_grey_pause.png"));
+    previousIcon = QIcon::fromTheme("media-skip-backward", QIcon(":/icons/images/button_grey_rewind.png"));
+    nextIcon = QIcon::fromTheme("media-skip-forward", QIcon(":/icons/images/button_grey_fastforward.png"));
+    exitIcon = QIcon::fromTheme("application-exit", QIcon(":/icons/images/button_grey_close.png"));
+
+    ui->previousButton->setIcon(previousIcon);
+    ui->playPauseButton->setIcon(playIcon);
+    ui->nextButton->setIcon(nextIcon);
+}
+
 void MainWindow::prepareTracks()
 {
     QList<Track*> *tracks = new QList<Track*>();
-    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/01_sad_robot.mp3"));
-    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/02_take_me_to_the_bonuslevel_because_i_need_an_extralife.mp3"));
+    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/01_sad_robot.mp3", "Sad Robot"));
+    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/02_take_me_to_the_bonuslevel_because_i_need_an_extralife.mp3", "Take Me To the Bonuslevel Because I Need an Extra Life"));
 
     QListIterator<Track*> tracksIterator(*tracks);
 
@@ -98,8 +113,10 @@ void MainWindow::switchToPrevious(){
 
 void MainWindow::togglePlayPause(){
     if(playlist->state()==Phonon::PlayingState) {
+        ui->playPauseButton->setIcon(playIcon);
         playlist->pause();
     } else {
+        ui->playPauseButton->setIcon(pauseIcon);
         playlist->play();
     }
 }

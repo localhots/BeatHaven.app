@@ -1,5 +1,10 @@
 <RCC>
     <qresource prefix="/icons">
-        <file alias="favicon.png">images/favicon.png</file>
+        <file>images/favicon.png</file>
+        <file>images/button_grey_close.png</file>
+        <file>images/button_grey_fastforward.png</file>
+        <file>images/button_grey_pause.png</file>
+        <file>images/button_grey_play.png</file>
+        <file>images/button_grey_rewind.png</file>
     </qresource>
 </RCC>
