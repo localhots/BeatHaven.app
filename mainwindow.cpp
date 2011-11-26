@@ -26,11 +26,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     generateIcons();
 
-    QAction* exitMenuAction = new QAction(exitIcon, QString::fromUtf8("В&ыход"), this);
-    exitMenuAction->setIconVisibleInMenu(true);
-    connect(exitMenuAction, SIGNAL(triggered()), this, SLOT(close()));
+    populateTrayMenu(trayMenu);
 
-    trayMenu->addAction(exitMenuAction);
+
 
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
@@ -59,6 +57,23 @@ void MainWindow::iconActivated(QSystemTrayIcon::ActivationReason reason)
             break;
     }
 }
+void addActionToMenuAndSlot(QMenu *menu, QAction *action, QObject *target, const char *slot_method){
+    action->setIconVisibleInMenu(true);
+
+    QObject::connect(action, SIGNAL(triggered()), target, slot_method);
+
+    menu->addAction(action);
+}
+
+void MainWindow::populateTrayMenu(QMenu *trayMenu) {
+    addActionToMenuAndSlot(trayMenu, new QAction(previousIcon, QString::fromUtf8("&Предыдущий"), this), this, SLOT(switchToPrevious()));
+    addActionToMenuAndSlot(trayMenu, new QAction(nextIcon, QString::fromUtf8("&Следующий"), this), this, SLOT(switchToNext()));
+
+    trayMenu->addSeparator();
+
+    addActionToMenuAndSlot(trayMenu, new QAction(exitIcon, QString::fromUtf8("В&ыход"), this), this, SLOT(close()));
+}
+
 void MainWindow::closeEvent(QCloseEvent *event)
  {
      if (event->spontaneous()&&trayIcon->isVisible()) {
@@ -112,6 +127,7 @@ void MainWindow::prepareTracks()
 ///////////////////////////////////////////////////////////////////////
 
 void MainWindow::switchToPrevious(){
+    qDebug()<<QString::fromUtf8("Предыдущий!");
 }
 
 void MainWindow::togglePlayPause(){
@@ -125,4 +141,5 @@ void MainWindow::togglePlayPause(){
 }
 
 void MainWindow::switchToNext(){
+    qDebug()<<QString::fromUtf8("Следующий!");
 }

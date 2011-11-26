@@ -135,8 +135,42 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>previousButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>switchToPrevious()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>63</x>
+     <y>265</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>399</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>nextButton</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>switchToNext()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>329</x>
+     <y>255</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>397</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>togglePlayPause()</slot>
+  <slot>switchToPrevious()</slot>
+  <slot>switchToNext()</slot>
  </slots>
 </ui>

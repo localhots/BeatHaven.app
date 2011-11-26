@@ -32,6 +32,7 @@ private:
     Ui::MainWindow *ui;
 
     void prepareTracks();
+    void populateTrayMenu(QMenu *trayMenu);
     void generateIcons();
 
     QAction *restoreAction;
