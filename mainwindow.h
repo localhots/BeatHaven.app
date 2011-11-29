@@ -32,6 +32,7 @@ private:
     Ui::MainWindow *ui;
 
     void prepareTracks();
+    void prepareGlobalShortcuts();
     void populateTrayMenu(QMenu *trayMenu);
     void generateIcons();
 

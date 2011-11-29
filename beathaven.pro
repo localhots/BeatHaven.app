@@ -6,6 +6,15 @@
 
 QT       += core gui phonon
 
+CONFIG  += qxt
+QXT     += core gui
+
+INCLUDEPATH += /usr/include/qxt/QxtCore
+INCLUDEPATH += /usr/include/qxt/QxtGui
+
+LIBS += /usr/lib/libQxtCore.so
+LIBS += /usr/lib/libQxtGui.so
+
 TARGET = beathaven
 TEMPLATE = app
 

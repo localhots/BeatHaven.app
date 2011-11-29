@@ -4,7 +4,7 @@
 #include <phonon/MediaObject>
 #include <phonon/AudioOutput>
 
-#include <QDebug>
+#include <QxtGlobalShortcut>
 
 #include "data/track.h"
 
@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    prepareGlobalShortcuts();
 
     trayIcon = new QSystemTrayIcon(this);
 
@@ -27,8 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
     generateIcons();
 
     populateTrayMenu(trayMenu);
-
-
 
     trayIcon->setContextMenu(trayMenu);
     trayIcon->show();
@@ -81,6 +80,16 @@ void MainWindow::closeEvent(QCloseEvent *event)
          event->ignore();
      }
  }
+///////////////////////////////////////////////////////////////////////
+// Подготовка глобальных хоткеев
+///////////////////////////////////////////////////////////////////////
+void MainWindow::prepareGlobalShortcuts()
+{
+    QxtGlobalShortcut* shortcut = new QxtGlobalShortcut(this);
+    connect(shortcut, SIGNAL(activated()), this, SLOT(togglePlayPause()));
+    shortcut->setShortcut(QKeySequence("Ctrl+Shift+F12"));
+}
+
 
 ///////////////////////////////////////////////////////////////////////
 // Подготовка дорожек и иконок
