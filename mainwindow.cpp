@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     prepareGlobalShortcuts();
 
     trayIcon = new QSystemTrayIcon(this);
@@ -87,7 +88,16 @@ void MainWindow::prepareGlobalShortcuts()
 {
     QxtGlobalShortcut* shortcut = new QxtGlobalShortcut(this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(togglePlayPause()));
-    shortcut->setShortcut(QKeySequence("Ctrl+Shift+F12"));
+    shortcut->setShortcut(QKeySequence(readSettingWithFallbackAndSave("hotkeys/PlayPause","Ctrl+Shift+F12").toString()));
+}
+
+QVariant MainWindow::readSettingWithFallbackAndSave(QString key, QVariant fallback)
+{
+    if(!settings.contains(key)){
+        settings.setValue(key, fallback);
+    }
+
+    return settings.value(key, fallback);
 }
 
 

@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QtGui>
+#include <QSettings>
 
 #include <phonon/MediaObject>
 
@@ -17,6 +18,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    QVariant readSettingWithFallbackAndSave(QString key, QVariant fallback);
 
 protected:
     void closeEvent(QCloseEvent *event);
@@ -35,6 +37,8 @@ private:
     void prepareGlobalShortcuts();
     void populateTrayMenu(QMenu *trayMenu);
     void generateIcons();
+
+    QSettings settings;
 
     QAction *restoreAction;
     QAction *quitAction;

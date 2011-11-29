@@ -4,7 +4,9 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    a.setApplicationName("BeatHaven");
+    a.setOrganizationName("BeatHaven");
+    a.setOrganizationDomain("beathaven.org");
+    a.setApplicationName("BeatHaven.app");
 
     MainWindow w;
     w.show();
