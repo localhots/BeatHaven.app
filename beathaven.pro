@@ -20,10 +20,12 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    data/track.cpp
+    data/track.cpp \
+    data/tracklistmodel.cpp
 
 HEADERS  += mainwindow.h \
-    data/track.h
+    data/track.h \
+    data/tracklistmodel.h
 
 FORMS    += mainwindow.ui
 

@@ -119,25 +119,20 @@ void MainWindow::generateIcons()
 
 void MainWindow::prepareTracks()
 {
-    QList<Track*> *tracks = new QList<Track*>();
-    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/01_sad_robot.mp3", "Sad Robot"));
-    tracks->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/02_take_me_to_the_bonuslevel_because_i_need_an_extralife.mp3", "Take Me To the Bonuslevel Because I Need an Extra Life"));
+    tracklist = new TrackListModel();
 
-    QListIterator<Track*> tracksIterator(*tracks);
+    tracklist->getTracks()->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/01_sad_robot.mp3", "Sad Robot"));
+    tracklist->getTracks()->append(new Track("http://www.konsolentuning.de/downloads/pornophonique/8-bit_lagerfeuer/02_take_me_to_the_bonuslevel_because_i_need_an_extralife.mp3", "Take Me To the Bonuslevel Because I Need an Extra Life"));
+
+    QListIterator<Track*> tracksIterator(*tracklist->getTracks());
+    ui->trackListView->setModel(tracklist);
 
     playlist = new Phonon::MediaObject(this);
     Phonon::AudioOutput* audioOutput = new Phonon::AudioOutput(Phonon::MusicCategory, this);
     Phonon::createPath(playlist, audioOutput);
 
     while(tracksIterator.hasNext()) {
-        Track* t = tracksIterator.next();
-
-        QListWidgetItem* item = new QListWidgetItem(t->getTitle());
-
-        ui->trackListWidget->insertItem(
-                    ui->trackListWidget->count(), item);
-
-        playlist->enqueue(t->getFileURL());
+        playlist->enqueue(tracksIterator.next()->getFileURL());
     }
 }
 

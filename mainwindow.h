@@ -7,6 +7,8 @@
 
 #include <phonon/MediaObject>
 
+#include "data/tracklistmodel.h"
+
 namespace Ui {
     class MainWindow;
 }
@@ -45,6 +47,7 @@ private:
 
     QSystemTrayIcon *trayIcon;
 
+    TrackListModel* tracklist;
     Phonon::MediaObject* playlist;
 
     QIcon playIcon;

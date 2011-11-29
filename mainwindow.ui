@@ -42,7 +42,7 @@
      </widget>
     </item>
     <item>
-     <widget class="QListWidget" name="trackListWidget"/>
+     <widget class="QListView" name="trackListView"/>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
